@@ -1,4 +1,8 @@
 package com.dicoding.themovieapps.data.source.remote
 
-class MovieRemoteDataSource {
+interface MovieRemoteDataSource {
+}
+
+class MovieRemoteDataSourceImpl: MovieRemoteDataSource {
+
 }

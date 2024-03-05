@@ -13,7 +13,11 @@ fun TheMovieMainNavigation(
 ) {
     NavHost(navController = navController, startDestination = Screen.Splash.route) {
         composable(Screen.Splash.route) {
-            SplashScreen()
+            SplashScreen {
+                navController.navigate(Screen.Home.route) {
+                    popUpTo(navController.graph.id)
+                }
+            }
         }
 
         navigation(route = Screen.Home.route, startDestination = Screen.HomeNavigator.route) {
@@ -22,5 +26,4 @@ fun TheMovieMainNavigation(
             }
         }
     }
-
 }

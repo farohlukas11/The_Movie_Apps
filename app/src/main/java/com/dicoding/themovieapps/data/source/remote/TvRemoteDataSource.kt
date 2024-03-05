@@ -1,4 +1,8 @@
 package com.dicoding.themovieapps.data.source.remote
 
-class TvRemoteDataSource {
+interface TvRemoteDataSource {
+}
+
+class TvRemoteDataSourceImpl : TvRemoteDataSource {
+
 }

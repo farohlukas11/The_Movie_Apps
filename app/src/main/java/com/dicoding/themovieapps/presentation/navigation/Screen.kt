@@ -9,7 +9,7 @@ sealed class Screen(val route: String) {
 
     object Movie: Screen("movie")
 
-    object MovieDetail: Screen("detail-movie")
+    object MovieDetail: Screen("movie-detail")
 
     object MovieSearch: Screen("movie-search")
 
@@ -20,4 +20,6 @@ sealed class Screen(val route: String) {
     object TvSearch: Screen("tv-search")
 
     object Favourite : Screen("favourite")
+
+    object  Profile: Screen("profile")
 }
