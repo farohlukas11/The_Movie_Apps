@@ -17,5 +17,4 @@ class TvLocalDataSourceImpl @Inject constructor(private val tvDao: TvDao) : TvLo
     override fun getTvList(series: String): Flow<List<TvEntity>> = tvDao.getAllTv(series)
 
     override suspend fun insertAllTv(tvList: List<TvEntity>) = tvDao.insertAllTv(tvList)
-
 }

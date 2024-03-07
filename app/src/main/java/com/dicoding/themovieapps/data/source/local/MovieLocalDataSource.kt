@@ -20,5 +20,4 @@ class MovieLocalDataSourceImpl @Inject constructor(private val movieDao: MovieDa
 
     override suspend fun insertAllMovie(movieList: List<MovieEntity>) =
         movieDao.insertAllMovie(movieList)
-
 }
