@@ -9,7 +9,9 @@ interface MovieRepository {
         series: String
     ): Flow<Resource<List<MovieModel>>>
 
-    fun getMoveRecommendations(
+    fun getMovieRecommendations(
         movieId: Int
     ): Flow<Resource<List<MovieModel>>>
+
+    fun searchMovie(query: String): Flow<Resource<List<MovieModel>>>
 }

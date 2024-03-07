@@ -31,5 +31,5 @@ data class MovieEntity(
     @ColumnInfo(name = "series")
     val series: String,
     @ColumnInfo(name = "is_favourite")
-    val isFavourite: Boolean = false,
+    var isFavourite: Boolean = false,
 )

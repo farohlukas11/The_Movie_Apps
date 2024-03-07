@@ -10,4 +10,6 @@ interface TvRepository {
     fun getTvRecommendations(
         tvId: Int
     ): Flow<Resource<List<TvModel>>>
+
+    fun searchTv(query: String): Flow<Resource<List<TvModel>>>
 }

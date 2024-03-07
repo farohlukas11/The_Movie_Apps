@@ -1,8 +1,11 @@
 package com.dicoding.themovieapps.utils
 
 import com.dicoding.themovieapps.data.entity.MovieEntity
+import com.dicoding.themovieapps.data.entity.TvEntity
 import com.dicoding.themovieapps.data.source.remote.response.MovieResponse
+import com.dicoding.themovieapps.data.source.remote.response.TvResponse
 import com.dicoding.themovieapps.domain.model.MovieModel
+import com.dicoding.themovieapps.domain.model.TvModel
 
 object DataMapper {
     fun mapMovieEntityToModel(movieEntity: MovieEntity) = MovieModel(
@@ -48,5 +51,50 @@ object DataMapper {
         voteAverage = movieResponse.voteAverage,
         id = movieResponse.id,
         voteCount = movieResponse.voteCount,
+    )
+
+    fun mapTvEntityToModel(tvEntity: TvEntity) = TvModel(
+        backdropPath = tvEntity.backdropPath,
+        firstAirDate = tvEntity.firstAirDate,
+        overview = tvEntity.overview,
+        originalLanguage = tvEntity.originalLanguage,
+        originalName = tvEntity.originalName,
+        popularity = tvEntity.popularity,
+        voteAverage = tvEntity.voteAverage,
+        name = tvEntity.name,
+        id = tvEntity.id,
+        voteCount = tvEntity.voteCount,
+        posterPath = tvEntity.posterPath,
+        series = tvEntity.series,
+        isFavourite = tvEntity.isFavourite
+    )
+
+    fun mapTvResponseToEntity(tvResponse: TvResponse, series: String) = TvEntity(
+        backdropPath = tvResponse.backdropPath ?: "",
+        firstAirDate = tvResponse.firstAirDate ?: "",
+        overview = tvResponse.overview ?: "",
+        originalLanguage = tvResponse.originalLanguage ?: "",
+        originalName = tvResponse.originalName ?: "",
+        popularity = tvResponse.popularity ?: 0,
+        voteAverage = tvResponse.voteAverage ?: 0,
+        name = tvResponse.name ?: "",
+        id = tvResponse.id,
+        voteCount = tvResponse.voteCount ?: 0,
+        posterPath = tvResponse.posterPath ?: "",
+        series = series
+    )
+
+    fun mapTvResponseToModel(tvResponse: TvResponse) = TvModel(
+        backdropPath = tvResponse.backdropPath,
+        firstAirDate = tvResponse.firstAirDate,
+        overview = tvResponse.overview ,
+        originalLanguage = tvResponse.originalLanguage,
+        originalName = tvResponse.originalName,
+        popularity = tvResponse.popularity,
+        voteAverage = tvResponse.voteAverage,
+        name = tvResponse.name,
+        id = tvResponse.id,
+        voteCount = tvResponse.voteCount,
+        posterPath = tvResponse.posterPath,
     )
 }

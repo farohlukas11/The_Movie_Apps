@@ -11,7 +11,7 @@ class TvModel(
     val popularity: Int? = null,
     val voteAverage: Int? = null,
     val name: String? = null,
-    val id: Int? = null,
+    val id: Int,
     val voteCount: Int? = null,
     val posterPath: String? = null,
     val series: String? = null,

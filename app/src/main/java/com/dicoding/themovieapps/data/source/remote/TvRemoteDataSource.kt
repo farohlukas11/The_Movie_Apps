@@ -16,7 +16,7 @@ interface TvRemoteDataSource {
 
     suspend fun getTvRecommendations(
         apiKey: String,
-        tvId: Int,
+        tvId: Int
     ): Flow<ApiResponse<List<TvResponse>>>
 
     suspend fun searchTv(apiKey: String, query: String): Flow<ApiResponse<List<TvResponse>>>

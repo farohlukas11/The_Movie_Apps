@@ -20,8 +20,7 @@ import javax.inject.Singleton
 class MovieRepositoryImpl @Inject constructor(
     private val movieRemoteDataSource: MovieRemoteDataSource,
     private val movieLocalDataSource: MovieLocalDataSource,
-) :
-    MovieRepository {
+) : MovieRepository {
     override fun getMovieList(series: String): Flow<Resource<List<MovieModel>>> =
         object : NetworkBoundResource<List<MovieModel>, List<MovieResponse>>() {
             override fun loadFromDB(): Flow<List<MovieModel>> =
@@ -45,9 +44,24 @@ class MovieRepositoryImpl @Inject constructor(
             override fun shouldFetch(data: List<MovieModel>?): Boolean = data.isNullOrEmpty()
         }.asFlow()
 
-    override fun getMoveRecommendations(movieId: Int): Flow<Resource<List<MovieModel>>> = flow {
+    override fun getMovieRecommendations(movieId: Int): Flow<Resource<List<MovieModel>>> = flow {
         emit(Resource.Loading())
         when (val response = movieRemoteDataSource.getMovieRecommendations("", movieId).first()) {
+            is ApiResponse.Success -> {
+                val movieModelList = response.data.map { movieResponse ->
+                    DataMapper.mapMovieResponseToModel(movieResponse)
+                }
+                emit(Resource.Success(movieModelList))
+            }
+
+            is ApiResponse.Error -> emit(Resource.Error(response.errorMessage))
+            is ApiResponse.Empty -> emit(Resource.Success())
+        }
+    }
+
+    override fun searchMovie(query: String): Flow<Resource<List<MovieModel>>> = flow {
+        emit(Resource.Loading())
+        when (val response = movieRemoteDataSource.searchMovie("", query).first()) {
             is ApiResponse.Success -> {
                 val movieModelList = response.data.map { movieResponse ->
                     DataMapper.mapMovieResponseToModel(movieResponse)
