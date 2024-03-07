@@ -1,5 +1,9 @@
 package com.dicoding.themovieapps.domain.model
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class MovieModel(
     val overview: String? = null,
     val originalLanguage: String? = null,
@@ -12,7 +16,7 @@ data class MovieModel(
     val popularity: Int? = null,
     val voteAverage: Int? = null,
     val id: Int? = null,
-    val adult: Boolean? = null,
     val voteCount: Int? = null,
-    val isFavourite: Boolean = false,
-)
+    val series: String? = null,
+    var isFavourite: Boolean = false,
+) : Parcelable

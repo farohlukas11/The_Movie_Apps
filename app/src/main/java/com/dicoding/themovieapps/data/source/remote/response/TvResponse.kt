@@ -4,14 +4,19 @@ import kotlinx.parcelize.Parcelize
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 
-@Parcelize
-data class MovieResultsResponse(
+data class TvResultsResponse(
     @field:SerializedName("results")
-    val movieList: List<MovieResponse> = emptyList(),
-) : Parcelable
+    val tvList: List<TvResponse> = emptyList()
+)
 
 @Parcelize
-data class MovieResponse(
+data class TvResponse(
+
+    @field:SerializedName("backdrop_path")
+    val backdropPath: String? = null,
+
+    @field:SerializedName("first_air_date")
+    val firstAirDate: String? = null,
 
     @field:SerializedName("overview")
     val overview: String? = null,
@@ -19,20 +24,8 @@ data class MovieResponse(
     @field:SerializedName("original_language")
     val originalLanguage: String? = null,
 
-    @field:SerializedName("original_title")
-    val originalTitle: String? = null,
-
-    @field:SerializedName("title")
-    val title: String? = null,
-
-    @field:SerializedName("poster_path")
-    val posterPath: String? = null,
-
-    @field:SerializedName("backdrop_path")
-    val backdropPath: String? = null,
-
-    @field:SerializedName("release_date")
-    val releaseDate: String? = null,
+    @field:SerializedName("original_name")
+    val originalName: String? = null,
 
     @field:SerializedName("popularity")
     val popularity: Int? = null,
@@ -40,9 +33,15 @@ data class MovieResponse(
     @field:SerializedName("vote_average")
     val voteAverage: Int? = null,
 
+    @field:SerializedName("name")
+    val name: String? = null,
+
     @field:SerializedName("id")
     val id: Int,
 
     @field:SerializedName("vote_count")
-    val voteCount: Int? = null
+    val voteCount: Int? = null,
+
+    @field:SerializedName("poster_path")
+    val posterPath: String? = null
 ) : Parcelable
