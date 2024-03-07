@@ -14,9 +14,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
 class TvRepositoryImpl @Inject constructor(
     private val tvRemoteDataSource: TvRemoteDataSource,
     private val tvLocalDataSource: TvLocalDataSource

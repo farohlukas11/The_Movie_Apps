@@ -12,6 +12,7 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -21,6 +22,7 @@ abstract class DataSourceModule {
     abstract fun provideMovieRemoteDataSource(movieRemoteDataSourceImpl: MovieRemoteDataSourceImpl): MovieRemoteDataSource
 
     @Binds
+    @Singleton
     abstract fun provideTvRemoteDataSource(tvRemoteDataSourceImpl: TvRemoteDataSourceImpl): TvRemoteDataSource
 
     @Binds
