@@ -28,11 +28,13 @@ import com.dicoding.themovieapps.presentation.screen.movie.home.MovieScreen
 import com.dicoding.themovieapps.presentation.screen.movie.home.viewmodel.MovieState
 import com.dicoding.themovieapps.presentation.screen.movie.home.viewmodel.MovieViewModel
 import com.dicoding.themovieapps.presentation.screen.movie.search.MovieSearchScreen
+import com.dicoding.themovieapps.presentation.screen.movie.search.viewmodel.MovieSearchViewModel
 import com.dicoding.themovieapps.presentation.screen.profile.ProfileScreen
 import com.dicoding.themovieapps.presentation.screen.tv.detail.TvDetailScreen
 import com.dicoding.themovieapps.presentation.screen.tv.home.TvScreen
 import com.dicoding.themovieapps.presentation.screen.tv.home.viewmodel.TvViewModel
 import com.dicoding.themovieapps.presentation.screen.tv.search.TvSearchScreen
+import com.dicoding.themovieapps.presentation.screen.tv.search.viewmodel.TvSearchViewModel
 
 @Composable
 fun HomeNavigator() {
@@ -104,7 +106,12 @@ fun HomeNavigator() {
                 MovieDetailScreen()
             }
             composable(Screen.MovieSearch.route) {
-                MovieSearchScreen()
+                val movieSearchViewModel: MovieSearchViewModel = hiltViewModel()
+
+                MovieSearchScreen(
+                    movieSearchState = movieSearchViewModel.movieSearchState,
+                    movieSearchEvent = movieSearchViewModel::onEvent
+                )
             }
             composable(Screen.Tv.route) {
                 val tvViewModel: TvViewModel = hiltViewModel()
@@ -118,7 +125,12 @@ fun HomeNavigator() {
                 TvDetailScreen()
             }
             composable(Screen.TvSearch.route) {
-                TvSearchScreen()
+                val tvSearchViewModel: TvSearchViewModel = hiltViewModel()
+
+                TvSearchScreen(
+                    tvSearchState = tvSearchViewModel.tvSearchState,
+                    tvSearchEvent = tvSearchViewModel::onEvent
+                )
             }
             composable(Screen.Favourite.route) {
                 FavouriteScreen()
