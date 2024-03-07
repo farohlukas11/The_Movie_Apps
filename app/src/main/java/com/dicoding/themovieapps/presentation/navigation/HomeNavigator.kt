@@ -15,6 +15,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -24,10 +25,13 @@ import com.dicoding.themovieapps.domain.model.BottomNavigationItem
 import com.dicoding.themovieapps.presentation.screen.favourite.FavouriteScreen
 import com.dicoding.themovieapps.presentation.screen.movie.detail.MovieDetailScreen
 import com.dicoding.themovieapps.presentation.screen.movie.home.MovieScreen
+import com.dicoding.themovieapps.presentation.screen.movie.home.viewmodel.MovieState
+import com.dicoding.themovieapps.presentation.screen.movie.home.viewmodel.MovieViewModel
 import com.dicoding.themovieapps.presentation.screen.movie.search.MovieSearchScreen
 import com.dicoding.themovieapps.presentation.screen.profile.ProfileScreen
 import com.dicoding.themovieapps.presentation.screen.tv.detail.TvDetailScreen
 import com.dicoding.themovieapps.presentation.screen.tv.home.TvScreen
+import com.dicoding.themovieapps.presentation.screen.tv.home.viewmodel.TvViewModel
 import com.dicoding.themovieapps.presentation.screen.tv.search.TvSearchScreen
 
 @Composable
@@ -89,7 +93,12 @@ fun HomeNavigator() {
             modifier = Modifier.padding(bottom = bottomPadding)
         ) {
             composable(Screen.Movie.route) {
-                MovieScreen()
+                val movieViewModel: MovieViewModel = hiltViewModel()
+
+                MovieScreen(
+                    movieState = movieViewModel.movieState,
+                    movieEvent = movieViewModel::onEvent
+                )
             }
             composable(Screen.MovieDetail.route) {
                 MovieDetailScreen()
@@ -98,7 +107,12 @@ fun HomeNavigator() {
                 MovieSearchScreen()
             }
             composable(Screen.Tv.route) {
-                TvScreen()
+                val tvViewModel: TvViewModel = hiltViewModel()
+
+                TvScreen(
+                    tvState = tvViewModel.tvState,
+                    tvEvent = tvViewModel::onEvent
+                )
             }
             composable(Screen.TvDetail.route) {
                 TvDetailScreen()
