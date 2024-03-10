@@ -21,6 +21,7 @@ daggerHilt = "2.49"
 retrofit = "2.9.0"
 room = "2.6.1"
 uiTextGoogleFonts = "1.6.2"
+googleServices = "4.4.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -84,3 +85,4 @@ androidLibrary = { id = "com.android.library", version.ref = "library" }
 androidKsp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 kotlinParcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "parcelize" }
 daggerHiltAndroid = { id = "com.google.dagger.hilt.android", version.ref = "daggerHilt" }
+androidGoogleServices = { id = "com.google.gms.google-services", version.ref = "googleServices" }

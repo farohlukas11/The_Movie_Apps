@@ -31,19 +31,19 @@ class TvViewModel @Inject constructor(private val getTvList: GetTvList) : ViewMo
     }
 
     private fun onGetOnTheAirTv() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch{
             tvState = tvState.copy(onTheAirTv = getTvList("on_the_air"))
         }
     }
 
     private fun onGetPopularTv() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             tvState = tvState.copy(popularTv = getTvList("popular"))
         }
     }
 
     private fun onGetTopRatedTv() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             tvState = tvState.copy(topRatedTv = getTvList("top_rated"))
         }
     }

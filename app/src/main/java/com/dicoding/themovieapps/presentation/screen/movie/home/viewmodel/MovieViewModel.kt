@@ -28,24 +28,35 @@ class MovieViewModel @Inject constructor(private val getMovieList: GetMovieList)
                 onGetPopularMovies()
                 onGetTopRatedMovies()
             }
+
+            is MovieEvent.OnInitMessage -> onInitMessage(movieEvent.message)
+            is MovieEvent.OnRemoveMessageSideEffect -> onRemoveMessageSideEffect()
         }
     }
 
     private fun onGetUpcomingMovies() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             movieState = movieState.copy(upcomingMovies = getMovieList("upcoming"))
         }
     }
 
     private fun onGetPopularMovies() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             movieState = movieState.copy(popularMovies = getMovieList("popular"))
         }
     }
 
     private fun onGetTopRatedMovies() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             movieState = movieState.copy(topRatedMovies = getMovieList("top_rated"))
         }
+    }
+
+    private fun onInitMessage(message: String) {
+        movieState = movieState.copy(message = message)
+    }
+
+    private fun onRemoveMessageSideEffect() {
+        movieState.message = null
     }
 }

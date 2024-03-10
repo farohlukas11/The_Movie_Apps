@@ -17,9 +17,9 @@ data class TvEntity(
     @ColumnInfo(name = "original_name")
     val originalName: String,
     @ColumnInfo(name = "popularity")
-    val popularity: Int,
+    val popularity: Double,
     @ColumnInfo(name = "vote_average")
-    val voteAverage: Int,
+    val voteAverage: Double,
     @ColumnInfo(name = "name")
     val name: String,
     @PrimaryKey

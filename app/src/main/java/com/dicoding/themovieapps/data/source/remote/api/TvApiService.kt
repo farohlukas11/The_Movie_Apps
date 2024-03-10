@@ -7,20 +7,20 @@ import retrofit2.http.Query
 
 interface TvApiService {
 
-    @GET("tv/{series}")
-    fun getTvList(
-        @Query("api_key") apiKey: String,
+    @GET("/3/tv/{series}")
+    suspend fun getTvList(
         @Path("series") series: String,
-    ): TvResultsResponse?
-
-    @GET("tv/{tv_id}/recommendations")
-    fun getTvRecommendations(
         @Query("api_key") apiKey: String,
-        @Path("tv_id") movieId: Int,
     ): TvResultsResponse?
 
-    @GET("search/tv")
-    fun searchTv(
+    @GET("/3/tv/{tv_id}/recommendations")
+    suspend fun getTvRecommendations(
+        @Path("tv_id") movieId: Int,
+        @Query("api_key") apiKey: String,
+    ): TvResultsResponse?
+
+    @GET("/3/search/tv")
+    suspend fun searchTv(
         @Query("api_key") apiKey: String,
         @Query("query") query: String
     ): TvResultsResponse?

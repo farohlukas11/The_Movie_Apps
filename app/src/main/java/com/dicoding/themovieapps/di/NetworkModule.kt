@@ -3,6 +3,7 @@ package com.dicoding.themovieapps.di
 import com.dicoding.themovieapps.BuildConfig
 import com.dicoding.themovieapps.data.source.remote.api.MovieApiService
 import com.dicoding.themovieapps.data.source.remote.api.TvApiService
+import com.dicoding.themovieapps.utils.BASE_URL
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -38,7 +39,7 @@ class NetworkModule {
     @Provides
     fun provideMovieApiService(client: OkHttpClient): MovieApiService {
         val retrofit = Retrofit.Builder()
-            .baseUrl("https://api.themoviedb.org/3/")
+            .baseUrl(BASE_URL)
             .client(client)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
@@ -49,7 +50,7 @@ class NetworkModule {
     @Provides
     fun provideTvApiService(client: OkHttpClient): TvApiService {
         val retrofit = Retrofit.Builder()
-            .baseUrl("https://api.themoviedb.org/3/")
+            .baseUrl(BASE_URL)
             .client(client)
             .addConverterFactory(GsonConverterFactory.create())
             .build()

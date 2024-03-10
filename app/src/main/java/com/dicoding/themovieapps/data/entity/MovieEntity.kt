@@ -21,9 +21,9 @@ data class MovieEntity(
     @ColumnInfo(name = "release_date")
     val releaseDate: String,
     @ColumnInfo(name = "popularity")
-    val popularity: Int,
+    val popularity: Double,
     @ColumnInfo(name = "vote_average")
-    val voteAverage: Int,
+    val voteAverage: Double,
     @PrimaryKey
     val id: Int,
     @ColumnInfo(name = "vote_count")

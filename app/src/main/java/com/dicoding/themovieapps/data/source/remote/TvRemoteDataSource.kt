@@ -30,7 +30,7 @@ class TvRemoteDataSourceImpl @Inject constructor(private val tvApiService: TvApi
         series: String
     ): Flow<ApiResponse<List<TvResponse>>> = flow {
         try {
-            val result = tvApiService.getTvList(apiKey, series)?.tvList
+            val result = tvApiService.getTvList(series, apiKey)?.tvList
             emit(if (!result.isNullOrEmpty()) ApiResponse.Success(result) else ApiResponse.Empty)
         } catch (e: Exception) {
             emit(ApiResponse.Error(e.message.toString()))
@@ -43,7 +43,7 @@ class TvRemoteDataSourceImpl @Inject constructor(private val tvApiService: TvApi
         tvId: Int
     ): Flow<ApiResponse<List<TvResponse>>> = flow {
         try {
-            val result = tvApiService.getTvRecommendations(apiKey, tvId)?.tvList
+            val result = tvApiService.getTvRecommendations(tvId, apiKey)?.tvList
             emit(if (!result.isNullOrEmpty()) ApiResponse.Success(result) else ApiResponse.Empty)
         } catch (e: Exception) {
             emit(ApiResponse.Error(e.message.toString()))

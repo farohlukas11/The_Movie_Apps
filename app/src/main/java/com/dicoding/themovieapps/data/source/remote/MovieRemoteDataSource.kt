@@ -34,7 +34,7 @@ class MovieRemoteDataSourceImpl @Inject constructor(private val movieApiService:
         series: String
     ): Flow<ApiResponse<List<MovieResponse>>> = flow {
         try {
-            val result = movieApiService.getMovieList(apiKey, series)?.movieList
+            val result = movieApiService.getMovieList(series, apiKey)?.movieList
             emit(if (!result.isNullOrEmpty()) ApiResponse.Success(result) else ApiResponse.Empty)
         } catch (e: Exception) {
             emit(ApiResponse.Error(e.message.toString()))
@@ -47,7 +47,7 @@ class MovieRemoteDataSourceImpl @Inject constructor(private val movieApiService:
         movieId: Int
     ): Flow<ApiResponse<List<MovieResponse>>> = flow {
         try {
-            val result = movieApiService.getMovieRecommendations(apiKey, movieId)?.movieList
+            val result = movieApiService.getMovieRecommendations(movieId, apiKey)?.movieList
             emit(if (!result.isNullOrEmpty()) ApiResponse.Success(result) else ApiResponse.Empty)
         } catch (e: Exception) {
             emit(ApiResponse.Error(e.message.toString()))

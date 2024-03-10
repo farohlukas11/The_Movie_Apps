@@ -28,10 +28,10 @@ data class TvResponse(
     val originalName: String? = null,
 
     @field:SerializedName("popularity")
-    val popularity: Int? = null,
+    val popularity: Double? = null,
 
     @field:SerializedName("vote_average")
-    val voteAverage: Int? = null,
+    val voteAverage: Double? = null,
 
     @field:SerializedName("name")
     val name: String? = null,

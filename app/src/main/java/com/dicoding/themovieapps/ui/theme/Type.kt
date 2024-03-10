@@ -21,26 +21,26 @@ private val fontFamily = FontFamily(
 )
 // Set of Material typography styles to start with
 val Typography = Typography(
-    bodyLarge = TextStyle(
+    displayLarge = TextStyle(
         fontFamily = fontFamily,
-        fontWeight = FontWeight.Normal,
-        fontSize = 16.sp,
-        lineHeight = 24.sp,
-        letterSpacing = 0.5.sp
+        color = blackColor
     ),
-//    /* Other default text styles to override
-    titleLarge = TextStyle(
+    displayMedium = TextStyle(
         fontFamily = fontFamily,
-        fontWeight = FontWeight.Normal,
-        fontSize = 22.sp,
-        lineHeight = 28.sp,
-        letterSpacing = 0.sp
-    ),
-    labelSmall = TextStyle(
-        fontFamily = fontFamily,
-        fontWeight = FontWeight.Medium,
-        fontSize = 11.sp,
-        lineHeight = 16.sp,
-        letterSpacing = 0.5.sp
+        color = brownColor
     )
 )
+
+val whiteTextStyle = TextStyle(fontFamily = fontFamily, color = whiteColor)
+val blueTextStyle = TextStyle(fontFamily = fontFamily, color = blueColor)
+val greenTextStyle = TextStyle(fontFamily = fontFamily, color = greenColor)
+val yellowTextStyle = TextStyle(fontFamily = fontFamily, color = yellowColor)
+
+
+var light: FontWeight = FontWeight.W300
+var regular: FontWeight = FontWeight.W400
+var medium: FontWeight = FontWeight.W500
+var semiBold: FontWeight = FontWeight.W600
+var bold: FontWeight = FontWeight.W700
+var extraBold: FontWeight = FontWeight.W800
+var black: FontWeight = FontWeight.W900

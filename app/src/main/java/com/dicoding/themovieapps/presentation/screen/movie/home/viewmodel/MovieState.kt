@@ -8,4 +8,5 @@ data class MovieState(
     var upcomingMovies: Flow<Resource<List<MovieModel>>>? = null,
     var popularMovies: Flow<Resource<List<MovieModel>>>? = null,
     var topRatedMovies: Flow<Resource<List<MovieModel>>>? = null,
+    var message: String? = null
 )
