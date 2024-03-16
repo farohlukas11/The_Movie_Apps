@@ -27,11 +27,14 @@ class TvViewModel @Inject constructor(private val getTvList: GetTvList) : ViewMo
                 onGetPopularTv()
                 onGetTopRatedTv()
             }
+
+            is TvEvent.OnInitMessage -> onInitMessage(tvEvent.message)
+            is TvEvent.OnRemoveMessageSideEffect -> onRemoveMessageSideEffect()
         }
     }
 
     private fun onGetOnTheAirTv() {
-        viewModelScope.launch{
+        viewModelScope.launch {
             tvState = tvState.copy(onTheAirTv = getTvList("on_the_air"))
         }
     }
@@ -46,5 +49,13 @@ class TvViewModel @Inject constructor(private val getTvList: GetTvList) : ViewMo
         viewModelScope.launch {
             tvState = tvState.copy(topRatedTv = getTvList("top_rated"))
         }
+    }
+
+    private fun onInitMessage(message: String) {
+        tvState = tvState.copy(message = message)
+    }
+
+    private fun onRemoveMessageSideEffect() {
+        tvState.message = null
     }
 }

@@ -1,4 +1,4 @@
-package com.dicoding.themovieapps.utils
+package com.dicoding.themovieapps.data.utils
 
 import com.dicoding.themovieapps.data.entity.MovieEntity
 import com.dicoding.themovieapps.data.entity.TvEntity

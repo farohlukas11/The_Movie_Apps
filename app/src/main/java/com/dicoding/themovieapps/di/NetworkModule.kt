@@ -3,7 +3,7 @@ package com.dicoding.themovieapps.di
 import com.dicoding.themovieapps.BuildConfig
 import com.dicoding.themovieapps.data.source.remote.api.MovieApiService
 import com.dicoding.themovieapps.data.source.remote.api.TvApiService
-import com.dicoding.themovieapps.utils.BASE_URL
+import com.dicoding.themovieapps.data.utils.BASE_URL
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

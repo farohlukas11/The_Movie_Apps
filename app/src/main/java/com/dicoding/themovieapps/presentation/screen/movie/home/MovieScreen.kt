@@ -2,7 +2,6 @@ package com.dicoding.themovieapps.presentation.screen.movie.home
 
 import android.widget.Toast
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -55,8 +54,7 @@ import com.dicoding.themovieapps.presentation.screen.movie.home.viewmodel.MovieE
 import com.dicoding.themovieapps.presentation.screen.movie.home.viewmodel.MovieState
 import com.dicoding.themovieapps.ui.theme.bold
 import com.dicoding.themovieapps.ui.theme.medium
-import com.dicoding.themovieapps.ui.theme.semiBold
-import com.dicoding.themovieapps.utils.BASE_IMAGE_URL
+import com.dicoding.themovieapps.data.utils.BASE_IMAGE_URL
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -243,8 +241,7 @@ fun MovieHorizontalItem(
         AsyncImage(
             model = ImageRequest.Builder(context).data(posterPathUrl).build(),
             contentDescription = "",
-            imageLoader = ImageLoader(context),
-            contentScale = ContentScale.Fit,
+            contentScale = ContentScale.Crop,
             modifier = modifier
                 .fillMaxWidth()
                 .height(212.dp)
@@ -318,11 +315,12 @@ fun MovieVerticalItem(
             .fillMaxWidth()
             .clickable {
                 onClick(movieModel)
-            }) {
+            },
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
         AsyncImage(
             model = ImageRequest.Builder(context).data(posterPathUrl).build(),
             contentDescription = "",
-            imageLoader = ImageLoader(context),
             contentScale = ContentScale.Crop,
             modifier = modifier
                 .width(85.dp)
@@ -335,7 +333,6 @@ fun MovieVerticalItem(
                 .fillMaxHeight()
                 .width(250.dp),
             horizontalAlignment = Alignment.Start,
-            verticalArrangement = Arrangement.Center,
         ) {
             Text(
                 text = movieModel.title ?: "",

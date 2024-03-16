@@ -8,8 +8,8 @@ import com.dicoding.themovieapps.data.source.remote.response.ApiResponse
 import com.dicoding.themovieapps.data.source.remote.response.MovieResponse
 import com.dicoding.themovieapps.domain.model.MovieModel
 import com.dicoding.themovieapps.domain.repositories.MovieRepository
-import com.dicoding.themovieapps.utils.API_KEY
-import com.dicoding.themovieapps.utils.DataMapper
+import com.dicoding.themovieapps.data.utils.API_KEY
+import com.dicoding.themovieapps.data.utils.DataMapper
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow

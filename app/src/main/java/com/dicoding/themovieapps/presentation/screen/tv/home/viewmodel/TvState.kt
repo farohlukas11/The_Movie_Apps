@@ -7,5 +7,6 @@ import kotlinx.coroutines.flow.Flow
 data class TvState(
     val onTheAirTv: Flow<Resource<List<TvModel>>>? = null,
     val popularTv: Flow<Resource<List<TvModel>>>? = null,
-    val topRatedTv: Flow<Resource<List<TvModel>>>? = null
+    val topRatedTv: Flow<Resource<List<TvModel>>>? = null,
+    var message: String? = null
 )

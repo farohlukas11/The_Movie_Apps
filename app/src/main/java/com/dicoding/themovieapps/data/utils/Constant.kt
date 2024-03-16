@@ -1,4 +1,4 @@
-package com.dicoding.themovieapps.utils
+package com.dicoding.themovieapps.data.utils
 
 const val API_KEY = "25a9c5e89f7895b76d389aad1c806028"
 const val BASE_URL = "https://api.themoviedb.org"

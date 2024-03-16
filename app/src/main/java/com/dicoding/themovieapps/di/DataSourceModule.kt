@@ -22,7 +22,6 @@ abstract class DataSourceModule {
     abstract fun provideMovieRemoteDataSource(movieRemoteDataSourceImpl: MovieRemoteDataSourceImpl): MovieRemoteDataSource
 
     @Binds
-    @Singleton
     abstract fun provideTvRemoteDataSource(tvRemoteDataSourceImpl: TvRemoteDataSourceImpl): TvRemoteDataSource
 
     @Binds
