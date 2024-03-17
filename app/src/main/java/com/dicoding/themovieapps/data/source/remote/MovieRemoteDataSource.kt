@@ -48,6 +48,7 @@ class MovieRemoteDataSourceImpl @Inject constructor(private val movieApiService:
     ): Flow<ApiResponse<List<MovieResponse>>> = flow {
         try {
             val result = movieApiService.getMovieRecommendations(movieId, apiKey)?.movieList
+            Log.d(TAG, result?.size.toString())
             emit(if (!result.isNullOrEmpty()) ApiResponse.Success(result) else ApiResponse.Empty)
         } catch (e: Exception) {
             emit(ApiResponse.Error(e.message.toString()))

@@ -1,31 +1,23 @@
 package com.dicoding.themovieapps.presentation.screen.movie.home
 
 import android.widget.Toast
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Language
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -37,31 +29,25 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import coil.ImageLoader
-import coil.compose.AsyncImage
-import coil.request.ImageRequest
 import com.dicoding.themovieapps.data.source.Resource
 import com.dicoding.themovieapps.domain.model.MovieModel
 import com.dicoding.themovieapps.presentation.screen.movie.home.viewmodel.MovieEvent
 import com.dicoding.themovieapps.presentation.screen.movie.home.viewmodel.MovieState
 import com.dicoding.themovieapps.ui.theme.bold
-import com.dicoding.themovieapps.ui.theme.medium
-import com.dicoding.themovieapps.data.utils.BASE_IMAGE_URL
+import com.dicoding.themovieapps.presentation.component.MovieHorizontalItem
+import com.dicoding.themovieapps.presentation.component.MovieVerticalItem
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MovieScreen(
     movieState: MovieState,
     movieEvent: (MovieEvent) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    toDetail: (MovieModel) -> Unit
 ) {
     val context = LocalContext.current
 
@@ -105,9 +91,10 @@ fun MovieScreen(
                         val listUpcomingMovies = resource.data
 
                         if (!listUpcomingMovies.isNullOrEmpty()) {
-                            UpcomingMoviesContent(upcomingMovies = listUpcomingMovies) {
-
-                            }
+                            UpcomingMoviesContent(
+                                upcomingMovies = listUpcomingMovies,
+                                toDetail = toDetail
+                            )
                         }
                     }
 
@@ -123,9 +110,10 @@ fun MovieScreen(
                         val listPopularMovies = resource.data
 
                         if (!listPopularMovies.isNullOrEmpty()) {
-                            PopularMoviesContent(popularMovies = listPopularMovies) {
-
-                            }
+                            PopularMoviesContent(
+                                popularMovies = listPopularMovies,
+                                toDetail = toDetail
+                            )
                         }
                     }
 
@@ -142,9 +130,10 @@ fun MovieScreen(
                         val listTopRatedMovies = resource.data
 
                         if (!listTopRatedMovies.isNullOrEmpty()) {
-                            TopRatedMoviesContent(topRatedMovies = listTopRatedMovies) {
-
-                            }
+                            TopRatedMoviesContent(
+                                topRatedMovies = listTopRatedMovies,
+                                toDetail = toDetail
+                            )
                         }
                     }
 
@@ -220,60 +209,6 @@ fun PopularMoviesContent(
     }
 }
 
-@Composable
-fun MovieHorizontalItem(
-    movieModel: MovieModel,
-    onClick: (MovieModel) -> Unit,
-    modifier: Modifier = Modifier
-) {
-    val context = LocalContext.current
-    val movieVoteAverage = movieModel.voteAverage ?: 0.0
-    val posterPathUrl = "$BASE_IMAGE_URL${movieModel.posterPath}"
-
-    Column(
-        modifier = modifier
-            .width(143.dp)
-            .clickable {
-                onClick(movieModel)
-            },
-        horizontalAlignment = Alignment.Start
-    ) {
-        AsyncImage(
-            model = ImageRequest.Builder(context).data(posterPathUrl).build(),
-            contentDescription = "",
-            contentScale = ContentScale.Crop,
-            modifier = modifier
-                .fillMaxWidth()
-                .height(212.dp)
-                .clip(RoundedCornerShape(8))
-        )
-        Spacer(modifier = Modifier.height(12.dp))
-        Text(
-            text = movieModel.title ?: "",
-            style = MaterialTheme.typography.displayLarge.copy(
-                fontWeight = medium,
-                fontSize = 15.sp
-            ),
-            maxLines = 2,
-            overflow = TextOverflow.Ellipsis
-        )
-        Spacer(modifier = Modifier.height(5.dp))
-        Row(verticalAlignment = Alignment.CenterVertically, modifier = modifier.fillMaxWidth()) {
-            Icon(
-                imageVector = Icons.Default.Star,
-                contentDescription = "",
-                tint = Color.Yellow,
-                modifier = modifier.size(12.dp)
-            )
-            Spacer(modifier = Modifier.width(1.5.dp))
-            Text(
-                text = "$movieVoteAverage/10 IMDb",
-                style = MaterialTheme.typography.displayMedium.copy(fontSize = 12.sp)
-            )
-        }
-    }
-}
-
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun TopRatedMoviesContent(
@@ -295,86 +230,6 @@ fun TopRatedMoviesContent(
                 ) {
                     MovieVerticalItem(movieModel = movieModel, onClick = toDetail)
                 }
-            }
-        }
-    }
-}
-
-@Composable
-fun MovieVerticalItem(
-    movieModel: MovieModel,
-    onClick: (MovieModel) -> Unit,
-    modifier: Modifier = Modifier
-) {
-    val context = LocalContext.current
-    val movieVoteAverage = movieModel.voteAverage ?: 0.0
-    val posterPathUrl = "$BASE_IMAGE_URL${movieModel.posterPath}"
-
-    Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .clickable {
-                onClick(movieModel)
-            },
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        AsyncImage(
-            model = ImageRequest.Builder(context).data(posterPathUrl).build(),
-            contentDescription = "",
-            contentScale = ContentScale.Crop,
-            modifier = modifier
-                .width(85.dp)
-                .height(120.dp)
-                .clip(RoundedCornerShape(8))
-        )
-        Spacer(modifier = Modifier.width(16.dp))
-        Column(
-            modifier = modifier
-                .fillMaxHeight()
-                .width(250.dp),
-            horizontalAlignment = Alignment.Start,
-        ) {
-            Text(
-                text = movieModel.title ?: "",
-                style = MaterialTheme.typography.displayLarge.copy(
-                    fontWeight = medium,
-                    fontSize = 15.sp
-                ),
-                maxLines = 2,
-                overflow = TextOverflow.Ellipsis
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = modifier.fillMaxWidth()
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Star,
-                    contentDescription = "",
-                    tint = Color.Yellow,
-                    modifier = modifier.size(12.dp)
-                )
-                Spacer(modifier = Modifier.width(4.dp))
-                Text(
-                    text = "$movieVoteAverage/10 IMDb",
-                    style = MaterialTheme.typography.displayMedium.copy(fontSize = 12.sp)
-                )
-            }
-            Spacer(modifier = Modifier.height(8.dp))
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = modifier.fillMaxWidth()
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Language,
-                    contentDescription = "",
-                    modifier = modifier.size(12.dp)
-                )
-                Spacer(modifier = Modifier.width(4.dp))
-                Text(
-                    text = movieModel.originalLanguage ?: "",
-                    style = MaterialTheme.typography.displayMedium.copy(fontSize = 12.sp)
-                )
             }
         }
     }

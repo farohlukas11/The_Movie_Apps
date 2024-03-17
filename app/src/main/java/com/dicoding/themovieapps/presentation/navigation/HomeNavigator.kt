@@ -22,10 +22,13 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.dicoding.themovieapps.domain.model.BottomNavigationItem
+import com.dicoding.themovieapps.domain.model.MovieModel
+import com.dicoding.themovieapps.domain.model.TvModel
 import com.dicoding.themovieapps.presentation.screen.favourite.FavouriteScreen
 import com.dicoding.themovieapps.presentation.screen.movie.detail.MovieDetailScreen
+import com.dicoding.themovieapps.presentation.screen.movie.detail.viewmodel.MovieDetailEvent
+import com.dicoding.themovieapps.presentation.screen.movie.detail.viewmodel.MovieDetailViewModel
 import com.dicoding.themovieapps.presentation.screen.movie.home.MovieScreen
-import com.dicoding.themovieapps.presentation.screen.movie.home.viewmodel.MovieState
 import com.dicoding.themovieapps.presentation.screen.movie.home.viewmodel.MovieViewModel
 import com.dicoding.themovieapps.presentation.screen.movie.search.MovieSearchScreen
 import com.dicoding.themovieapps.presentation.screen.movie.search.viewmodel.MovieSearchViewModel
@@ -99,11 +102,27 @@ fun HomeNavigator() {
 
                 MovieScreen(
                     movieState = movieViewModel.movieState,
-                    movieEvent = movieViewModel::onEvent
+                    movieEvent = movieViewModel::onEvent,
+                    toDetail = { movieModel ->
+                        navigateToMovieDetail(navController, movieModel)
+                    }
                 )
             }
             composable(Screen.MovieDetail.route) {
-                MovieDetailScreen()
+                val movieDetailViewModel: MovieDetailViewModel = hiltViewModel()
+
+                navController.previousBackStackEntry?.savedStateHandle?.get<MovieModel?>(
+                    "movie_model"
+                )?.let { movieModel ->
+                    MovieDetailScreen(
+                        movieDetailState = movieDetailViewModel.movieDetailState,
+                        movieDetailEvent = movieDetailViewModel::onEvent,
+                        movieModel = movieModel,
+                        toDetail = { movieDetailModel ->
+                            navigateToMovieDetail(navController, movieDetailModel)
+                        }
+                    )
+                }
             }
             composable(Screen.MovieSearch.route) {
                 val movieSearchViewModel: MovieSearchViewModel = hiltViewModel()
@@ -118,7 +137,10 @@ fun HomeNavigator() {
 
                 TvScreen(
                     tvState = tvViewModel.tvState,
-                    tvEvent = tvViewModel::onEvent
+                    tvEvent = tvViewModel::onEvent,
+                    toDetail = { tvModel ->
+                        navigateToTvDetail(navController, tvModel)
+                    }
                 )
             }
             composable(Screen.TvDetail.route) {
@@ -152,4 +174,22 @@ private fun navigateToTab(navController: NavController, route: String) {
         launchSingleTop = true
         restoreState = true
     }
+}
+
+private fun navigateToMovieDetail(navController: NavController, movieModel: MovieModel) {
+    navController.currentBackStackEntry?.savedStateHandle?.apply {
+        set("movie_model", movieModel)
+    }
+    navController.navigate(
+        route = Screen.MovieDetail.route
+    )
+}
+
+private fun navigateToTvDetail(navController: NavController, tvModel: TvModel) {
+    navController.currentBackStackEntry?.savedStateHandle?.apply {
+        set("tv_model", tvModel)
+    }
+    navController.navigate(
+        route = Screen.TvDetail.route
+    )
 }

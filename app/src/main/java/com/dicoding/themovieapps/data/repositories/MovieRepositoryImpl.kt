@@ -1,5 +1,6 @@
 package com.dicoding.themovieapps.data.repositories
 
+import android.util.Log
 import com.dicoding.themovieapps.data.source.NetworkBoundResource
 import com.dicoding.themovieapps.data.source.Resource
 import com.dicoding.themovieapps.data.source.local.MovieLocalDataSource
@@ -10,9 +11,11 @@ import com.dicoding.themovieapps.domain.model.MovieModel
 import com.dicoding.themovieapps.domain.repositories.MovieRepository
 import com.dicoding.themovieapps.data.utils.API_KEY
 import com.dicoding.themovieapps.data.utils.DataMapper
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -50,6 +53,7 @@ class MovieRepositoryImpl @Inject constructor(
         when (val response = movieRemoteDataSource.getMovieRecommendations(API_KEY, movieId).first()) {
             is ApiResponse.Success -> {
                 val movieModelList = response.data.map { movieResponse ->
+                    Log.d("REPO", "$movieResponse")
                     DataMapper.mapMovieResponseToModel(movieResponse)
                 }
                 emit(Resource.Success(movieModelList))

@@ -14,7 +14,6 @@ interface MovieApiService {
         @Query("api_key") apiKey: String,
     ): MovieResultsResponse?
 
-    @Headers("Content-Type:application/json")
     @GET("/3/movie/{movie_id}/recommendations")
     suspend fun getMovieRecommendations(
         @Path("movie_id") movieId: Int,
