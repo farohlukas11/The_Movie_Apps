@@ -47,7 +47,8 @@ fun MovieScreen(
     movieState: MovieState,
     movieEvent: (MovieEvent) -> Unit,
     modifier: Modifier = Modifier,
-    toDetail: (MovieModel) -> Unit
+    toDetail: (MovieModel) -> Unit,
+    toSearch: () -> Unit
 ) {
     val context = LocalContext.current
 
@@ -64,7 +65,7 @@ fun MovieScreen(
                     )
                 },
                 actions = {
-                    IconButton(onClick = { /*TODO*/ }) {
+                    IconButton(onClick = toSearch) {
                         Icon(imageVector = Icons.Default.Search, contentDescription = "")
                     }
                 },

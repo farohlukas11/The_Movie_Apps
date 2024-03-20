@@ -26,7 +26,6 @@ import com.dicoding.themovieapps.domain.model.MovieModel
 import com.dicoding.themovieapps.domain.model.TvModel
 import com.dicoding.themovieapps.presentation.screen.favourite.FavouriteScreen
 import com.dicoding.themovieapps.presentation.screen.movie.detail.MovieDetailScreen
-import com.dicoding.themovieapps.presentation.screen.movie.detail.viewmodel.MovieDetailEvent
 import com.dicoding.themovieapps.presentation.screen.movie.detail.viewmodel.MovieDetailViewModel
 import com.dicoding.themovieapps.presentation.screen.movie.home.MovieScreen
 import com.dicoding.themovieapps.presentation.screen.movie.home.viewmodel.MovieViewModel
@@ -105,6 +104,9 @@ fun HomeNavigator() {
                     movieEvent = movieViewModel::onEvent,
                     toDetail = { movieModel ->
                         navigateToMovieDetail(navController, movieModel)
+                    },
+                    toSearch = {
+                        navigateToTab(navController, Screen.MovieSearch.route)
                     }
                 )
             }
@@ -120,6 +122,9 @@ fun HomeNavigator() {
                         movieModel = movieModel,
                         toDetail = { movieDetailModel ->
                             navigateToMovieDetail(navController, movieDetailModel)
+                        },
+                        onBack = {
+                            navController.popBackStack()
                         }
                     )
                 }
@@ -129,7 +134,10 @@ fun HomeNavigator() {
 
                 MovieSearchScreen(
                     movieSearchState = movieSearchViewModel.movieSearchState,
-                    movieSearchEvent = movieSearchViewModel::onEvent
+                    movieSearchEvent = movieSearchViewModel::onEvent,
+                    toDetail = { movieModel ->
+                        navigateToMovieDetail(navController, movieModel)
+                    }
                 )
             }
             composable(Screen.Tv.route) {

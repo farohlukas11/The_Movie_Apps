@@ -19,15 +19,33 @@ class MovieSearchViewModel @Inject constructor(private val searchMovie: SearchMo
 
     fun onEvent(movieSearchEvent: MovieSearchEvent) {
         when (movieSearchEvent) {
-            is MovieSearchEvent.OnQueryChange -> {
-                onSearchMovies(movieSearchEvent.query)
+            is MovieSearchEvent.OnQueryChange -> onQueryChange(movieSearchEvent.query)
+            is MovieSearchEvent.OnSearching -> {
+                if (movieSearchState.searchText.isNotBlank()) onSearchingMovies()
+                else onInitMessage("Input Masih Kosong!")
             }
+
+            is MovieSearchEvent.OnInitMessage -> onInitMessage(movieSearchEvent.message)
+            is MovieSearchEvent.OnRemoveMessageSideEffect -> onRemoveMessageSideEffect()
         }
     }
 
-    private fun onSearchMovies(query: String) {
-        viewModelScope.launch(Dispatchers.IO) {
-            movieSearchState = movieSearchState.copy(searchMovies = searchMovie(query))
+    private fun onQueryChange(query: String) {
+        movieSearchState = movieSearchState.copy(searchText = query)
+    }
+
+    private fun onSearchingMovies() {
+        viewModelScope.launch {
+            movieSearchState =
+                movieSearchState.copy(searchMovies = searchMovie(movieSearchState.searchText))
         }
+    }
+
+    private fun onInitMessage(message: String) {
+        movieSearchState = movieSearchState.copy(message = message)
+    }
+
+    private fun onRemoveMessageSideEffect() {
+        movieSearchState.message = null
     }
 }
