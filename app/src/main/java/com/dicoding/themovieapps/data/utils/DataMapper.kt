@@ -24,6 +24,21 @@ object DataMapper {
         isFavourite = movieEntity.isFavourite
     )
 
+    fun mapMovieModelToEntity(movieModel: MovieModel) = MovieEntity(
+        overview = movieModel.overview ?: "",
+        originalLanguage = movieModel.originalLanguage ?: "",
+        originalTitle = movieModel.originalTitle ?: "",
+        title = movieModel.title ?: "",
+        posterPath = movieModel.posterPath ?: "",
+        backdropPath = movieModel.backdropPath ?: "",
+        releaseDate = movieModel.releaseDate ?: "",
+        popularity = movieModel.popularity ?: 0.0,
+        voteAverage = movieModel.voteAverage ?: 0.0,
+        id = movieModel.id,
+        voteCount = movieModel.voteCount ?: 0,
+        series = movieModel.series ?: "",
+    )
+
     fun mapMovieResponseToEntity(movieResponse: MovieResponse, series: String) = MovieEntity(
         overview = movieResponse.overview ?: "",
         originalLanguage = movieResponse.originalLanguage ?: "",
@@ -87,7 +102,7 @@ object DataMapper {
     fun mapTvResponseToModel(tvResponse: TvResponse) = TvModel(
         backdropPath = tvResponse.backdropPath,
         firstAirDate = tvResponse.firstAirDate,
-        overview = tvResponse.overview ,
+        overview = tvResponse.overview,
         originalLanguage = tvResponse.originalLanguage,
         originalName = tvResponse.originalName,
         popularity = tvResponse.popularity,

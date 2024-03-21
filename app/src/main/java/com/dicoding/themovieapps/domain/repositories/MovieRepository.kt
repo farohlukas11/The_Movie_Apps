@@ -14,4 +14,12 @@ interface MovieRepository {
     ): Flow<Resource<List<MovieModel>>>
 
     fun searchMovie(query: String): Flow<Resource<List<MovieModel>>>
+
+    fun isMovieExist(id: Int): Flow<Boolean>
+
+    fun updateIsFavouriteMovie(id: Int, isFavourite: Boolean)
+
+    fun getIsFavouriteMovieStatus(id: Int): Flow<Boolean>
+
+    suspend fun insertMovie(movie: MovieModel)
 }

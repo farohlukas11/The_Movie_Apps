@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dicoding.themovieapps.domain.usecase.movie.SearchMovie
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -32,16 +32,18 @@ class MovieSearchViewModel @Inject constructor(private val searchMovie: SearchMo
 
     private fun onQueryChange(query: String) {
         movieSearchState = movieSearchState.copy(searchText = query)
+        onSearchingMovies()
     }
 
     private fun onSearchingMovies() {
         viewModelScope.launch {
+            delay(750)
             movieSearchState =
                 movieSearchState.copy(searchMovies = searchMovie(movieSearchState.searchText))
         }
     }
 
-    private fun onInitMessage(message: String) {
+    private fun onInitMessage(message: String?) {
         movieSearchState = movieSearchState.copy(message = message)
     }
 

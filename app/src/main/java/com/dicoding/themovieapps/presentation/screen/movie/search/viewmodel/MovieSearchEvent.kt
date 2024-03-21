@@ -6,7 +6,7 @@ sealed class MovieSearchEvent {
 
     data object OnSearching : MovieSearchEvent()
 
-    data class OnInitMessage(val message: String) : MovieSearchEvent()
+    data class OnInitMessage(val message: String?) : MovieSearchEvent()
 
     data object OnRemoveMessageSideEffect : MovieSearchEvent()
 }

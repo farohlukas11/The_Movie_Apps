@@ -69,8 +69,12 @@ fun MovieDetailScreen(
     val posterPathUrl = "$BASE_IMAGE_URL${movieModel.posterPath}"
 
     LaunchedEffect(Unit) {
+        movieDetailEvent(MovieDetailEvent.OnCheckingMovieIsExist(movieModel.id))
+        movieDetailEvent(MovieDetailEvent.OnGetIsFavouriteMovieStatus(movieModel.id))
         movieDetailEvent(MovieDetailEvent.OnInitRecommendationsMovie(movieModel.id))
     }
+
+    println(movieDetailState.movieIsExist)
 
     val movieRecommendations = movieDetailState.movieRecommendation?.collectAsStateWithLifecycle(
         initialValue = null
@@ -101,11 +105,26 @@ fun MovieDetailScreen(
                         )
                         Column {
                             IconButton(
-                                onClick = { },
+                                onClick = {
+                                    if (movieDetailState.movieIsExist) {
+                                        movieDetailEvent(
+                                            MovieDetailEvent.OnUpdateFavouriteMovie(
+                                                movieModel.id,
+                                                !movieDetailState.isFavourite
+                                            )
+                                        )
+                                    } else {
+                                        movieDetailEvent(
+                                            MovieDetailEvent.OnInsertAndUpdateFavouriteNewMovie(
+                                                movieModel
+                                            )
+                                        )
+                                    }
+                                },
                                 modifier = modifier.size(36.dp)
                             ) {
                                 Icon(
-                                    imageVector = if (movieModel.isFavourite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
+                                    imageVector = if (movieDetailState.isFavourite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
                                     contentDescription = "",
                                     tint = Color.Red
                                 )
@@ -191,7 +210,7 @@ fun RecommendationMoviesContent(
 ) {
     Column(modifier = Modifier.padding(vertical = 10.dp)) {
         Text(
-            text = "Recommendations Movies",
+            text = "Recommendations Movie",
             style = MaterialTheme.typography.displayLarge.copy(fontSize = 16.sp, fontWeight = bold),
             modifier = modifier.padding(start = 20.dp)
         )

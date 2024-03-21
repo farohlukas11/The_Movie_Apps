@@ -6,5 +6,7 @@ import kotlinx.coroutines.flow.Flow
 
 data class MovieDetailState(
     var movieRecommendation: Flow<Resource<List<MovieModel>>>? = null,
-    var message: String? = null
+    var message: String? = null,
+    var movieIsExist: Boolean = false,
+    var isFavourite: Boolean = false,
 )

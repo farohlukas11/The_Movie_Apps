@@ -1,6 +1,7 @@
 package com.dicoding.themovieapps.data.repositories
 
 import android.util.Log
+import com.dicoding.themovieapps.data.entity.MovieEntity
 import com.dicoding.themovieapps.data.source.NetworkBoundResource
 import com.dicoding.themovieapps.data.source.Resource
 import com.dicoding.themovieapps.data.source.local.MovieLocalDataSource
@@ -50,7 +51,8 @@ class MovieRepositoryImpl @Inject constructor(
 
     override fun getMovieRecommendations(movieId: Int): Flow<Resource<List<MovieModel>>> = flow {
         emit(Resource.Loading())
-        when (val response = movieRemoteDataSource.getMovieRecommendations(API_KEY, movieId).first()) {
+        when (val response =
+            movieRemoteDataSource.getMovieRecommendations(API_KEY, movieId).first()) {
             is ApiResponse.Success -> {
                 val movieModelList = response.data.map { movieResponse ->
                     Log.d("REPO", "$movieResponse")
@@ -78,4 +80,15 @@ class MovieRepositoryImpl @Inject constructor(
             is ApiResponse.Empty -> emit(Resource.Success())
         }
     }
+
+    override fun isMovieExist(id: Int): Flow<Boolean> = movieLocalDataSource.isMovieExist(id)
+
+    override fun updateIsFavouriteMovie(id: Int, isFavourite: Boolean) =
+        movieLocalDataSource.updateIsFavouriteMovie(id, isFavourite)
+
+    override fun getIsFavouriteMovieStatus(id: Int): Flow<Boolean> =
+        movieLocalDataSource.getIsFavouriteMovieStatus(id)
+
+    override suspend fun insertMovie(movie: MovieModel) =
+        movieLocalDataSource.insertMovie(DataMapper.mapMovieModelToEntity(movie))
 }
